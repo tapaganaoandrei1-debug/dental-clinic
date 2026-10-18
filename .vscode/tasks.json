@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Package Dental Clinic Phase 3 ZIP",
+			"type": "shell",
+			"command": "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::CreateFromDirectory('C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic', 'C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic-phase3.zip', [System.IO.Compression.CompressionLevel]::Optimal, $true)",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Verify Dental Clinic Phase 3 ZIP",
+			"type": "shell",
+			"command": "Add-Type -AssemblyName System.IO.Compression.FileSystem; $zip = [System.IO.Compression.ZipFile]::OpenRead('C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic-phase3.zip'); try { $entries = @($zip.Entries | ForEach-Object { $_.FullName.Replace('\\', '/') }); $required = @('dental-clinic/README.md','dental-clinic/index.php','dental-clinic/verify-email.php','dental-clinic/patient/book.php','dental-clinic/admin/reports.php','dental-clinic/database/phase3_migration.sql','dental-clinic/config/.htaccess','dental-clinic/database/.htaccess','dental-clinic/includes/.htaccess'); $missing = @($required | Where-Object { $entries -notcontains $_ }); if ($missing.Count) { throw ('ZIP missing: ' + ($missing -join ', ')) }; 'ZIP verified: ' + $entries.Count + ' entries, all required files including hidden access rules are present.' } finally { $zip.Dispose() }",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Repackage Dental Clinic Phase 3 ZIP",
+			"type": "shell",
+			"command": "if (Test-Path -LiteralPath 'C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic-phase3.zip') { Remove-Item -LiteralPath 'C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic-phase3.zip' }; Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::CreateFromDirectory('C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic', 'C:\\Users\\Andre Tapaganao\\Desktop\\ADNRE\\dental-clinic-phase3.zip', [System.IO.Compression.CompressionLevel]::Optimal, $true)",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

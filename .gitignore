@@ -1,0 +1,15 @@
+# Local database files created while running XAMPP
+/mysql-data/
+/mysql-custom.ini
+
+# Local authentication test data
+/tmp-login-cookies.txt
+
+# Machine-specific VS Code settings and workspace files
+/.vscode/settings.json
+/dental-clinic/config/Dental Clinic.code-workspace
+
+# Supplied archives/design file are not part of the source repository
+/dental-clinic-phase2.zip
+/dental-clinic-phase3.zip
+/New folder/*.pdf
