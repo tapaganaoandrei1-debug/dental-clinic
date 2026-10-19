@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS email_verification_tokens (
     KEY idx_verification_user_expiry (user_id, used_at, expires_at),
     CONSTRAINT fk_verification_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS dental_sessions (
+    session_id    VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    session_data  MEDIUMBLOB NOT NULL,
+    last_activity INT UNSIGNED NOT NULL,
+    PRIMARY KEY (session_id),
+    KEY idx_dental_sessions_activity (last_activity)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

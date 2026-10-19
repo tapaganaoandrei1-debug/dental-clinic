@@ -242,6 +242,14 @@ CREATE TABLE IF NOT EXISTS clinic_settings (
     PRIMARY KEY (setting_key)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS dental_sessions (
+    session_id    VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    session_data  MEDIUMBLOB NOT NULL,
+    last_activity INT UNSIGNED NOT NULL,
+    PRIMARY KEY (session_id),
+    KEY idx_dental_sessions_activity (last_activity)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT IGNORE INTO users (id, role, full_name, email, phone, password_hash) VALUES
 (1, 'admin', 'Clinic Administrator', 'admin@dentalclinic.test', '09170000001', 'RUN_SETUP_SCRIPT'),
 (2, 'staff', 'Front Desk Staff', 'staff@dentalclinic.test', '09170000002', 'RUN_SETUP_SCRIPT'),

@@ -11,25 +11,33 @@ PHP 8 and MySQL appointment, queue, and clinic administration system.
 - Staff appointment approval, clinic schedules, breaks, holidays, and booking limits
 - Account/role administration, reports, CSV export, audit trail, notices, and SQL backups
 
-## XAMPP Setup
+## XAMPP Setup (Windows)
 
-1. Start Apache and MySQL in the XAMPP Control Panel.
-2. Clone the repository into `htdocs` as `dental-clinic`. The repository contains this app in its `dental-clinic` subfolder; the top-level page routes there automatically.
-3. In phpMyAdmin, import `dental-clinic/database/dental_clinic.sql`. The script is repeatable and does not drop existing tables or rows. It creates missing tables and starter services/providers/schedules.
-4. From the app folder, initialize the seeded development accounts:
+1. Install XAMPP and start **Apache** and **MySQL**.
+2. Put this whole project folder in XAMPP's `htdocs` folder. It should be at `C:\xampp\htdocs\dental-clinic`.
+3. Open [phpMyAdmin](http://localhost/phpmyadmin), choose **Import**, select `dental-clinic\database\dental_clinic.sql` from this project, then click **Import** at the bottom. This setup keeps existing database records.
+4. Double-click `setup-xampp-accounts.bat` in the project folder.
+5. Open [the clinic app](http://localhost/dental-clinic/).
 
-   ```powershell
-   Set-Location D:\xampp\htdocs\dental-clinic\dental-clinic
-   & D:\xampp\php\php.exe .\scripts\setup-accounts.php
-   ```
+Sign in with one of these local test accounts:
 
-   Replace `D:\xampp` with your XAMPP installation folder if it differs.
+- Admin: `admin@dentalclinic.test` / `Admin@123`
+- Staff: `staff@dentalclinic.test` / `Staff@123`
+- Patient: `patient@dentalclinic.test` / `Patient@123`
 
-5. Open `http://localhost/dental-clinic/`. The app detects its URL path automatically, including when the repository is nested.
+Each coworker should install their own copy and database. This shares code, not patient or appointment data.
 
-By default, XAMPP connects as MySQL `root` with no password. For another local database account, set `DENTAL_DB_HOST`, `DENTAL_DB_NAME`, `DENTAL_DB_USER`, and `DENTAL_DB_PASS` in the Apache environment, then restart Apache. Set `DENTAL_BASE_URL` only when the app is served through a custom alias. Detailed PHP errors are disabled by default; set `APP_DEBUG=1` only while diagnosing a local development issue.
+## Vercel Setup (Online)
 
-Each coworker should clone the source and create their own local database. This shares the application code, not accounts or clinic data. For simultaneous use of shared patient and appointment data, deploy one secured central server/database instead of sharing local database files or backups.
+Vercel runs this app with its [Container Runtime (Beta)](https://vercel.com/docs/functions/runtimes/container). The app needs a hosted MySQL database; your computer's XAMPP database cannot be reached from Vercel.
+
+1. Create a hosted MySQL database named `dental_clinic` and import `dental-clinic/database/dental_clinic.sql` using your database provider's instructions.
+2. In Vercel, choose **Add New Project** and import this GitHub repository. Keep the project root at the repository root; Vercel uses `Dockerfile.vercel`.
+3. In the Vercel project's **Settings > Environment Variables**, add the database host, port, username, and password as `DENTAL_DB_HOST`, `DENTAL_DB_PORT`, `DENTAL_DB_USER`, and `DENTAL_DB_PASS`. Set `DENTAL_DB_NAME` to `dental_clinic`, add `DENTAL_ADMIN_EMAIL` plus a unique `DENTAL_ADMIN_PASSWORD` of at least 8 characters, and set `APP_ORIGIN` to the public site URL for email links.
+4. If your database provider gives you a CA certificate, add it as `DENTAL_DB_SSL_CA`. Redeploy after saving the variables.
+5. Open the Vercel URL. The first container start creates the administrator account; later starts leave its password unchanged.
+
+Use a new hosted database, not the live XAMPP database. Keep database and admin passwords only in Vercel Environment Variables. Email verification and password-reset delivery need an external mail service and `DENTAL_MAIL_FROM`; scheduled reminders also need an external scheduler. The database backup page downloads a backup but does not store it permanently on Vercel.
 
 ## Development Accounts
 
@@ -58,9 +66,7 @@ C:\xampp\php\php.exe C:\xampp\htdocs\dental-clinic\scripts\backup-database.php
 
 Backups are SQL files. Restrict the backup folder and test restoration before relying on it.
 
-## Before Deployment
+## Before Public Use
 
-- Remove or protect development-only demo accounts and replace local database credentials.
-- Use HTTPS, a strong database password, and a production mail transport.
-- Remove or protect development-only demo accounts and rotate every default password.
-- Configure and test SMTP/SMS delivery, scheduled jobs, and database backups.
+- Use unique production passwords and a secured hosted database.
+- Configure and test email delivery, scheduled reminders, and off-site backups.

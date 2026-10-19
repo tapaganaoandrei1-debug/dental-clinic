@@ -82,11 +82,18 @@ const QUEUE_TRANSITIONS = [
 //   $_SESSION['user_id'], ['role'], ['full_name'], ['email'],
 //   ['csrf_token'], ['last_activity'], ['flash']
 // Cookie settings are fine for localhost. In production use HTTPS
-// (the 'secure' flag below turns on automatically when HTTPS is used).
-$is_https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+// Proxies such as Vercel terminate HTTPS before forwarding to PHP.
+$forwarded_protocol = strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ''));
+$is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || $forwarded_protocol === 'https';
+
+// Load MySQL before the session so session state can survive replaced servers.
+require_once __DIR__ . '/database.php';
+require_once __DIR__ . '/../includes/database-session-handler.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.use_strict_mode', '1');
+    session_set_save_handler(new DatabaseSessionHandler($pdo), true);
     session_set_cookie_params([
         'lifetime' => 0,
         'path'     => '/',
@@ -102,7 +109,6 @@ header('X-Frame-Options: SAMEORIGIN');
 header('X-Content-Type-Options: nosniff');
 
 // ---------- Load the shared files (order matters) ----------
-require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/csrf.php';
 require_once __DIR__ . '/../includes/auth.php';

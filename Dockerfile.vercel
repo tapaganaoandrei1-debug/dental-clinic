@@ -1,0 +1,17 @@
+FROM php:8.3-apache
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends default-mysql-client \
+    && docker-php-ext-install pdo_mysql \
+    && a2enmod headers rewrite \
+    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html
+COPY dental-clinic/ ./
+COPY .htaccess ./.htaccess
+
+ENV APP_ENV=production
+ENV MYSQLDUMP_PATH=/usr/bin/mysqldump
+EXPOSE 80
+CMD ["sh", "-c", "php /var/www/html/scripts/setup-accounts.php && exec apache2-foreground"]
