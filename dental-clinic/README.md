@@ -14,17 +14,22 @@ PHP 8 and MySQL appointment, queue, and clinic administration system.
 ## XAMPP Setup
 
 1. Start Apache and MySQL in the XAMPP Control Panel.
-2. Place this folder at `C:\xampp\htdocs\dental-clinic`.
-3. For a new database, import `database/dental_clinic.sql` in phpMyAdmin. This script drops and recreates the project tables; do not run it against data you need to keep.
-4. For an existing database, import `database/phase3_migration.sql`. It adds email verification and password recovery without dropping clinic data; it is safe to rerun.
-5. Check `config/database.php` and `BASE_URL` in `config/config.php` if your folder name or MySQL credentials differ.
-6. For the seeded development accounts, run from a terminal:
+2. Clone the repository into `htdocs` as `dental-clinic`. The repository contains this app in its `dental-clinic` subfolder; the top-level page routes there automatically.
+3. In phpMyAdmin, import `dental-clinic/database/dental_clinic.sql`. The script is repeatable and does not drop existing tables or rows. It creates missing tables and starter services/providers/schedules.
+4. From the app folder, initialize the seeded development accounts:
 
    ```powershell
-   C:\xampp\php\php.exe C:\xampp\htdocs\dental-clinic\scripts\setup-accounts.php
+   Set-Location D:\xampp\htdocs\dental-clinic\dental-clinic
+   & D:\xampp\php\php.exe .\scripts\setup-accounts.php
    ```
 
-Open `http://localhost/dental-clinic/` after placing the project under `htdocs`.
+   Replace `D:\xampp` with your XAMPP installation folder if it differs.
+
+5. Open `http://localhost/dental-clinic/`. The app detects its URL path automatically, including when the repository is nested.
+
+By default, XAMPP connects as MySQL `root` with no password. For another local database account, set `DENTAL_DB_HOST`, `DENTAL_DB_NAME`, `DENTAL_DB_USER`, and `DENTAL_DB_PASS` in the Apache environment, then restart Apache. Set `DENTAL_BASE_URL` only when the app is served through a custom alias. Detailed PHP errors are disabled by default; set `APP_DEBUG=1` only while diagnosing a local development issue.
+
+Each coworker should clone the source and create their own local database. This shares the application code, not accounts or clinic data. For simultaneous use of shared patient and appointment data, deploy one secured central server/database instead of sharing local database files or backups.
 
 ## Development Accounts
 
@@ -55,7 +60,7 @@ Backups are SQL files. Restrict the backup folder and test restoration before re
 
 ## Before Deployment
 
-- Set `DEBUG_MODE` to `false` and replace the XAMPP database credentials.
+- Remove or protect development-only demo accounts and replace local database credentials.
 - Use HTTPS, a strong database password, and a production mail transport.
 - Remove or protect development-only demo accounts and rotate every default password.
 - Configure and test SMTP/SMS delivery, scheduled jobs, and database backups.

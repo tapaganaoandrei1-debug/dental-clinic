@@ -7,14 +7,30 @@
 // ---------- Basic settings ----------
 define('APP_NAME', 'SmileCare Dental');
 
-// URL path of this project on localhost (no trailing slash).
-// Project in htdocs/dental-clinic  ->  '/dental-clinic'
-define('BASE_URL', '/dental-clinic');
+// Detect the project's URL path so nested repository clones work as well.
+$document_root = realpath($_SERVER['DOCUMENT_ROOT'] ?? '') ?: '';
+$application_root = realpath(__DIR__ . '/..') ?: '';
+$base_url_override = getenv('DENTAL_BASE_URL');
+if ($base_url_override !== false && $base_url_override !== '') {
+    $base_url = '/' . trim(str_replace('\\', '/', $base_url_override), '/');
+} elseif ($document_root !== '' && $application_root !== '') {
+    $document_root = rtrim(str_replace('\\', '/', $document_root), '/');
+    $application_root = str_replace('\\', '/', $application_root);
+    $root_prefix = strtolower($document_root) . '/';
+    $base_url = strtolower($application_root) === strtolower($document_root)
+        ? ''
+        : (strncmp(strtolower($application_root), $root_prefix, strlen($root_prefix)) === 0
+            ? substr($application_root, strlen($document_root))
+            : '');
+} else {
+    $base_url = '';
+}
+define('BASE_URL', $base_url);
 
 date_default_timezone_set('Asia/Manila');
 
-// Show PHP errors while developing. Set to false before deploying.
-define('DEBUG_MODE', true);
+// Enable detailed PHP output explicitly in a local development environment.
+define('DEBUG_MODE', getenv('APP_DEBUG') === '1');
 if (DEBUG_MODE) {
     ini_set('display_errors', '1');
     error_reporting(E_ALL);

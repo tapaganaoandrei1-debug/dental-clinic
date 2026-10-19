@@ -2,10 +2,11 @@
 // config/database.php
 // Database connection using PDO. XAMPP default: user "root", empty password.
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'dental_clinic');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', getenv('DENTAL_DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DENTAL_DB_NAME') ?: 'dental_clinic');
+define('DB_USER', getenv('DENTAL_DB_USER') ?: 'root');
+$database_password = getenv('DENTAL_DB_PASS');
+define('DB_PASS', $database_password === false ? '' : $database_password);
 
 try {
     $pdo = new PDO(
