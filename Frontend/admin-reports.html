@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports & analytics - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="ops-shell">
+    <aside id="ops-sidebar" data-active="reports"></aside>
+    <main class="ops-main">
+      <div class="ops-head">
+        <div><h1 class="page-title">Reports & analytics</h1><p class="page-sub">How the clinic is doing.</p></div>
+        <div class="head-actions"><select id="range" class="form-select" aria-label="Date range"><option value="7">Last 7 days</option><option value="30">Last 30 days</option></select><button type="button" class="btn btn-outline-secondary" onclick="window.print()">Print</button></div>
+      </div>
+      <div id="form-alert" class="alert" role="alert" hidden></div>
+      <div class="stat-grid">
+        <div class="card-surface stat"><span>Appointments</span><strong id="r-total">-</strong><small id="r-total-sub"></small></div>
+        <div class="card-surface stat"><span>Completed</span><strong id="r-done">-</strong><small>Visits finished</small></div>
+        <div class="card-surface stat"><span>Cancelled / no-show</span><strong id="r-lost">-</strong><small id="r-lost-sub"></small></div>
+        <div class="card-surface stat"><span>Revenue</span><strong id="r-rev">-</strong><small>From completed visits</small></div>
+      </div>
+      <div class="ops-grid">
+        <section class="card-surface booking-card"><h2>Appointments per day</h2><div id="by-day" class="bars"></div></section>
+        <section class="card-surface booking-card"><h2>By service</h2><div id="by-service" class="bars"></div></section>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ops-layout.js"></script>
+  <script src="js/admin-reports.js"></script>
+</body>
+</html>

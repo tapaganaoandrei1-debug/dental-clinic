@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap first, then our own CSS so ours wins -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+  <header id="site-header" data-active="home"></header>
+
+  <main id="main">
+    <section class="page hero">
+      <div>
+        <h1>Book online. Skip the waiting room.</h1>
+        <p class="hero-lead">Pick a service, choose an open time slot, and follow your queue number live from your phone.</p>
+        <div class="hero-actions" id="hero-actions">
+          <a class="btn btn-primary btn-lg" href="register.html">Get started</a>
+          <a href="login.html">I already have an account</a>
+        </div>
+      </div>
+
+      <!-- Sample ticket from the booking design -->
+      <div>
+        <div class="ticket ticket-light" aria-hidden="true">
+          <div class="ticket-head">
+            <span>Your digital queue ticket</span>
+            <span class="live-pill">Live</span>
+          </div>
+          <div class="ticket-number">
+            <span>Queue number</span>
+            <strong>Q-014</strong>
+          </div>
+          <div class="ticket-row"><span>Now serving</span><b>Q-009</b></div>
+          <div class="ticket-row"><span>People ahead of you</span><b>4</b></div>
+          <div class="ticket-row"><span>Estimated wait</span><b>~25 min</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page home-section" aria-labelledby="how-title">
+      <h2 class="section-title" id="how-title">How it works</h2>
+      <p class="section-sub">Three steps from booking to your turn in the chair.</p>
+      <div class="steps">
+        <div class="card-surface step">
+          <div class="step-number">1</div>
+          <h3>Pick a service</h3>
+          <p>Choose a treatment and your preferred dentist, or let the clinic assign one.</p>
+        </div>
+        <div class="card-surface step">
+          <div class="step-number">2</div>
+          <h3>Choose a time</h3>
+          <p>See the open slots for your date. Booked times are disabled so nobody is double-booked.</p>
+        </div>
+        <div class="card-surface step">
+          <div class="step-number">3</div>
+          <h3>Follow your queue</h3>
+          <p>Get a digital queue number, see who is being served, and check your estimated wait.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page home-section" id="services" aria-labelledby="services-title">
+      <h2 class="section-title" id="services-title">Our services</h2>
+      <p class="section-sub">From a routine clean to cosmetic care, our team is here to help you feel good about your smile.</p>
+      <div class="service-grid" id="service-grid">
+        <p class="empty-state">Loading services...</p>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="closing-band">
+        <div>
+          <h2>Ready when you are.</h2>
+          <p>Create an account and book your first visit in a few minutes.</p>
+        </div>
+        <a class="btn btn-light btn-lg" id="closing-cta" href="register.html">Create your account</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

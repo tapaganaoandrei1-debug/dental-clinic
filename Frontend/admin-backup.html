@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings & backup - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="ops-shell">
+    <aside id="ops-sidebar" data-active="backup"></aside>
+    <main class="ops-main">
+      <div class="ops-head">
+        <div><h1 class="page-title">Settings & backup</h1><p class="page-sub">Clinic details and a copy of your data.</p></div>
+        
+      </div>
+      <div id="form-alert" class="alert" role="alert" hidden></div>
+      <div class="ops-grid">
+        <section class="card-surface booking-card">
+          <h2>Clinic details</h2>
+          <form id="settings-form" novalidate>
+            <div class="form-grid">
+              <div class="span-2"><label for="s-name" class="form-label">Clinic name</label><input id="s-name" class="form-control" maxlength="100"><p id="s-name-error" class="field-error" hidden></p></div>
+              <div><label for="s-phone" class="form-label">Phone</label><input id="s-phone" class="form-control" maxlength="30"></div>
+              <div><label for="s-email" class="form-label">Email</label><input id="s-email" type="email" class="form-control" maxlength="150"><p id="s-email-error" class="field-error" hidden></p></div>
+              <div class="span-2"><label for="s-address" class="form-label">Address</label><input id="s-address" class="form-control" maxlength="200"></div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Save details</button>
+          </form>
+        </section>
+        <section class="card-surface booking-card">
+          <h2>Backup</h2>
+          <p class="field-hint">Download a copy of the clinic's data.</p>
+          <button type="button" class="btn btn-primary" id="backup-btn">Download backup</button>
+          <p class="field-hint" id="backup-note"></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ops-layout.js"></script>
+  <script src="js/admin-backup.js"></script>
+</body>
+</html>

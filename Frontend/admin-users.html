@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Users & roles - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="ops-shell">
+    <aside id="ops-sidebar" data-active="users"></aside>
+    <main class="ops-main">
+      <div class="ops-head">
+        <div><h1 class="page-title">Users & roles</h1><p class="page-sub">Manage who can sign in and what they can do.</p></div>
+        
+      </div>
+      <div id="form-alert" class="alert" role="alert" hidden></div>
+      <section class="card-surface booking-card">
+        <h2>Add a staff or admin account</h2>
+        <form id="user-form" class="inline-form" novalidate>
+          <div><label for="u-name" class="form-label">Name</label><input id="u-name" class="form-control" maxlength="100"><p id="u-name-error" class="field-error" hidden></p></div>
+          <div><label for="u-email" class="form-label">Email</label><input id="u-email" type="email" class="form-control" maxlength="150"><p id="u-email-error" class="field-error" hidden></p></div>
+          <div><label for="u-role" class="form-label">Role</label><select id="u-role" class="form-select"><option value="staff">Staff</option><option value="admin">Admin</option></select></div>
+          <div><label for="u-pass" class="form-label">Temporary password</label><input id="u-pass" type="text" class="form-control" maxlength="72"><p id="u-pass-error" class="field-error" hidden></p></div>
+          <button type="submit" class="btn btn-primary">Add account</button>
+        </form>
+      </section>
+      <section class="card-surface booking-card">
+        <div class="section-head"><h2>All users</h2><span class="count" id="user-count"></span></div>
+        <div class="table-wrap"><table class="ops-table">
+          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Email verified</th><th>Active</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ops-layout.js"></script>
+  <script src="js/admin-users.js"></script>
+</body>
+</html>

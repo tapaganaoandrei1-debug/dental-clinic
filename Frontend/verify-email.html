@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify your email - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap first, then our own CSS so ours wins -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="auth-shell">
+
+    <aside class="auth-aside">
+      <div class="brand">
+        <span class="brand-mark">D</span>
+        <span>Dental Clinic Online</span>
+      </div>
+
+      <div class="aside-copy">
+        <h2>Confirm your email address.</h2>
+        <p>This keeps your clinic account connected to the right person, so reminders and queue updates reach you.</p>
+      </div>
+
+      <p class="aside-note">Verification links expire after 24 hours and can only be used once.</p>
+    </aside>
+
+    <section class="auth-main">
+      <div class="auth-panel">
+        <div class="brand mobile-brand">
+          <span class="brand-mark">D</span>
+          <span>Dental Clinic Online</span>
+        </div>
+
+        <h1>Verify your email</h1>
+        <p class="auth-sub">Verification links expire after 24 hours and can only be used once.</p>
+
+        <div id="form-alert" class="alert" role="alert" hidden></div>
+
+        <p id="verify-checking" class="auth-sub">Checking your link...</p>
+
+        <div id="verify-ready" hidden>
+          <span class="verify-address" id="verify-address"></span>
+          <button type="button" id="verify-btn" class="btn btn-primary w-100">Verify email address</button>
+        </div>
+
+        <div id="verify-done" hidden>
+          <div class="alert alert-success" role="status">Your email address is verified.</div>
+          <a class="btn btn-primary w-100" href="login.html?verified=1">Continue to log in</a>
+        </div>
+
+        <p class="auth-switch"><a href="register.html">Create a new account</a> or <a href="login.html">return to log in</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

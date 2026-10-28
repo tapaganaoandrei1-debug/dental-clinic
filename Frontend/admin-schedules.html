@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff & schedules - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="ops-shell">
+    <aside id="ops-sidebar" data-active="schedules"></aside>
+    <main class="ops-main">
+      <div class="ops-head">
+        <div><h1 class="page-title">Staff & schedules</h1><p class="page-sub">Working days and hours for each dentist. Booking slots follow these settings.</p></div>
+        
+      </div>
+      <div id="form-alert" class="alert" role="alert" hidden></div>
+      <div id="cards" class="sched-cards"></div>
+      <p class="field-hint" id="lunch-note"></p>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ops-layout.js"></script>
+  <script src="js/admin-schedules.js"></script>
+</body>
+</html>

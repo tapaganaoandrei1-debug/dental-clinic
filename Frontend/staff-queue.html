@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Queue control - Dental Clinic Online</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="ops-shell">
+    <aside id="ops-sidebar" data-active="queue"></aside>
+    <main class="ops-main">
+      <div class="ops-head">
+        <div>
+          <h1 class="page-title">Queue control</h1>
+          <p class="page-sub" id="today-label"></p>
+        </div>
+        <a class="btn btn-primary" href="staff-walk-in.html">+ Add walk-in</a>
+      </div>
+      <div id="form-alert" class="alert" role="alert" hidden></div>
+
+      <div class="serving-row">
+        <section class="card-surface serving-card" aria-live="polite">
+          <div>
+            <span class="next-label">Now serving</span>
+            <strong class="serving-number" id="serving-number">-</strong>
+            <p class="next-meta" id="serving-detail">No patient is in service.</p>
+          </div>
+          <div class="serving-actions">
+            <button type="button" class="btn btn-primary" id="serve-btn" disabled>Mark served</button>
+            <button type="button" class="btn btn-outline-secondary" id="next-btn">Call next</button>
+          </div>
+        </section>
+        <div class="card-surface stat"><span>In queue</span><strong id="st-queue">-</strong></div>
+        <div class="card-surface stat"><span>Avg. wait</span><strong id="st-wait">-</strong></div>
+        <div class="card-surface stat"><span>No-shows</span><strong id="st-noshow">-</strong></div>
+      </div>
+
+      <div class="board">
+        <section class="board-col"><h2><i class="dot dot-waiting"></i>Waiting <span class="count" id="n-waiting">0</span></h2><div id="col-waiting"></div></section>
+        <section class="board-col"><h2><i class="dot dot-called"></i>Called <span class="count" id="n-called">0</span></h2><div id="col-called"></div></section>
+        <section class="board-col"><h2><i class="dot dot-serving"></i>In service <span class="count" id="n-serving">0</span></h2><div id="col-serving"></div></section>
+      </div>
+
+      <section class="card-surface booking-card checkin-panel">
+        <div class="section-head"><h2>Arriving today</h2><span class="count">Check patients in when they arrive</span></div>
+        <div id="check-ins"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/fake-data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ops-layout.js"></script>
+  <script src="js/staff-queue.js"></script>
+</body>
+</html>
