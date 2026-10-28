@@ -254,3 +254,78 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 920px) {
     body { background-attachment: scroll; }
 }
+
+
+/* ===== Added: bigger buttons and fields, show-password, time-slot buttons ===== */
+.button { min-height: 54px; padding: 12px 24px; font-size: 17px; }
+.button-small { min-height: 46px; padding: 9px 18px; font-size: 15px; }
+.account-actions button { min-height: 48px; padding: 10px 18px; font-size: 15px; }
+.auth-form input, .form-field input, .form-field select, .form-field textarea,
+.filter-control input, .filter-control select { min-height: 54px; padding: 11px 14px; font-size: 17px; }
+.form-field textarea { min-height: 110px; }
+.form-field { position: relative; }
+
+.password-wrap { position: relative; display: block; }
+.password-wrap input { padding-right: 84px; }
+.password-toggle { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); min-height: 40px; padding: 6px 12px; border: 0; border-radius: 6px; background: transparent; color: var(--blue); font-size: 15px; font-weight: 800; cursor: pointer; }
+.password-toggle:hover { background: var(--blue-pale); }
+
+.slot-select { position: absolute; width: 1px; height: 1px; min-height: 0 !important; padding: 0 !important; border: 0 !important; opacity: 0; pointer-events: none; }
+.slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+.slot-button { min-height: 52px; border: 1px solid #bdcedc; border-radius: 8px; background: var(--white); color: var(--ink); font-size: 16px; font-weight: 750; cursor: pointer; }
+.slot-button:hover { border-color: var(--blue); background: var(--blue-pale); }
+.slot-button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--white); }
+.slot-button:focus-visible { outline: 3px solid #83b9e2; outline-offset: 2px; }
+.slot-note { grid-column: 1 / -1; margin: 0; padding: 14px; border: 1px dashed #bdcedc; border-radius: 8px; color: var(--muted); }
+
+/* ===== Added: dark theme + theme switch ===== */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --ink: #e8f0f7;
+    --ink-soft: #b4c6d6;
+    --muted: #8fa5b8;
+    --paper: #0c151e;
+    --white: #15222f;
+    --line: #2a3b4c;
+    --blue: #5eb0ee;
+    --blue-pale: #173247;
+    --mint: #12332a;
+    --coral: #ef7f96;
+    --coral-pale: #3a1a24;
+    --shadow: 0 14px 38px rgba(0, 0, 0, .45);
+}
+:root[data-theme="dark"] body { background-image: linear-gradient(rgba(12, 21, 30, .94), rgba(12, 21, 30, .94)), url("../images/clinic-lounge.png"); }
+:root[data-theme="dark"] .app-header { background: rgba(16, 27, 38, .97); }
+:root[data-theme="dark"] .record-card, :root[data-theme="dark"] .queue-row { background: #101c28; }
+:root[data-theme="dark"] .status-pill, :root[data-theme="dark"] .count-pill, :root[data-theme="dark"] .role-pill { background: #223344; color: #c3d3e0; }
+:root[data-theme="dark"] .status-pill[data-status="confirmed"], :root[data-theme="dark"] .status-pill[data-status="waiting"] { background: #173a28; color: #8fdca9; }
+:root[data-theme="dark"] .status-pill[data-status="called"], :root[data-theme="dark"] .status-pill[data-status="pending"] { background: #3d3112; color: #f2cf7a; }
+:root[data-theme="dark"] .status-pill[data-status="serving"] { background: var(--blue-pale); color: #8cc9f5; }
+:root[data-theme="dark"] .app-message { color: #8fe0bd; }
+:root[data-theme="dark"] .app-message.is-error { color: #ffb3c3; }
+:root[data-theme="dark"] .button-secondary { border-color: #3a4f63; }
+:root[data-theme="dark"] .button-danger { border-color: #6b2b3b; background: var(--white); color: #ff9db1; }
+:root[data-theme="dark"] .form-field input, :root[data-theme="dark"] .form-field select, :root[data-theme="dark"] .form-field textarea,
+:root[data-theme="dark"] .filter-control input, :root[data-theme="dark"] .filter-control select { border-color: #3a4f63; background: #101c28; color: var(--ink); }
+:root[data-theme="dark"] .auth-aside, :root[data-theme="dark"] .now-serving-card { color: #fff; }
+:root[data-theme="dark"] .now-serving-card { background: #1d4f78; }
+:root[data-theme="dark"] .stat-card.is-highlight span { color: #1d4f78; }
+:root[data-theme="dark"] .photo-card { background: #1a2a39; }
+:root[data-theme="dark"] .password-toggle:hover { background: var(--blue-pale); }
+
+.theme-toggle { min-height: 42px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--ink); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.theme-toggle:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ===== Added: keep header buttons on one line ===== */
+.app-header { flex-wrap: wrap; }
+.main-navigation { flex: 1 1 auto; flex-wrap: wrap; justify-content: center; min-width: 0; }
+.account-actions { flex: 0 0 auto; flex-wrap: nowrap; }
+.account-actions button, .theme-toggle { white-space: nowrap; flex: 0 0 auto; }
+.account-user { max-width: 150px; }
+.app-header { column-gap: 12px; }
+.account-actions { margin-left: auto; }
+@media (max-width: 1500px) { .main-navigation { order: 3; flex-basis: 100%; } }
+
+/* ===== Added: theme switch as an icon button ===== */
+.theme-toggle { width: 48px; height: 48px; min-height: 48px; padding: 0; display: inline-grid; place-items: center; border-radius: 12px; }
+.theme-toggle svg { width: 24px; height: 24px; }

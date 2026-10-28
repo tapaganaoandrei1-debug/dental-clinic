@@ -260,6 +260,7 @@ if ($action === 'register') {
         json_response(['ok' => false, 'error' => 'An account with that email already exists.'], 409);
     }
 
+    $verification_url = '';
     try {
         $pdo->beginTransaction();
         $stmt = $pdo->prepare('INSERT INTO users (role, full_name, email, phone, password_hash) VALUES (?, ?, ?, ?, ?)');
@@ -305,7 +306,13 @@ if ($action === 'register') {
         json_response(['ok' => false, 'error' => 'We could not create your account right now. Please try again.'], 500);
     }
 
-    json_response(['ok' => true, 'message' => 'Your account was created. Verify your email before signing in.']);
+    // Local testing only: on this computer (not production), return the link so no mail server is needed.
+    $is_local = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true) && getenv('APP_ENV') !== 'production';
+    $response = ['ok' => true, 'message' => 'Your account was created. Verify your email before signing in.'];
+    if ($is_local && $verification_url !== '') {
+        $response['dev_verification_url'] = $verification_url;
+    }
+    json_response($response);
 }
 
 json_response(['ok' => false, 'error' => 'This authentication action is not available.'], 404);

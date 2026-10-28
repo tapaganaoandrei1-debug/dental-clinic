@@ -580,8 +580,14 @@
             } else if (form.id === 'register-form') {
                 const values = new FormData(form);
                 const data = await request(authEndpoint, { method: 'POST', body: JSON.stringify({ action: 'register', full_name: values.get('full_name'), email: values.get('email'), phone: values.get('phone'), password: values.get('password'), password_confirmation: values.get('password_confirmation') }) });
-                flash(data.message);
-                navigate('login');
+                if (data.dev_verification_url && data.dev_verification_url.includes('#')) {
+                    // Local testing: no mail server, so go straight to the verification page
+                    flash('Local test mode: verify your email below.');
+                    location.hash = data.dev_verification_url.split('#')[1];
+                } else {
+                    flash(data.message);
+                    navigate('login');
+                }
             } else if (form.id === 'booking-form') {
                 const values = new FormData(form);
                 const rescheduleId = Number(form.dataset.rescheduleId || 0);
@@ -645,6 +651,123 @@
     document.addEventListener('change', event => {
         if (event.target.matches('#booking-service, #booking-dentist, #booking-date')) void loadSlots();
         if (event.target.matches('#walk-in-service, #walk-in-dentist')) void loadWalkInSlots();
+    });
+
+    // ===== Added features: show/hide password, time-slot buttons, double-click guard, clear errors =====
+
+    // 1) "Show / Hide" button on every password field
+    function enhancePasswordFields() {
+        document.querySelectorAll('input[type="password"]:not([data-has-toggle])').forEach(input => {
+            input.dataset.hasToggle = 'true';
+            const wrap = document.createElement('span');
+            wrap.className = 'password-wrap';
+            input.parentNode.insertBefore(wrap, input);
+            wrap.appendChild(input);
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'password-toggle';
+            toggle.textContent = 'Show';
+            toggle.setAttribute('aria-label', 'Show password');
+            toggle.addEventListener('click', () => {
+                const visible = input.type === 'text';
+                input.type = visible ? 'password' : 'text';
+                toggle.textContent = visible ? 'Show' : 'Hide';
+                toggle.setAttribute('aria-label', visible ? 'Show password' : 'Hide password');
+            });
+            wrap.appendChild(toggle);
+        });
+    }
+
+    // 2) Big tap-friendly time buttons that fill in the (hidden) time <select>, so the form code does not change
+    function enhanceSlotPickers() {
+        document.querySelectorAll('select[name="appointment_time"]').forEach(select => {
+            select.classList.add('slot-select');
+            let grid = select.nextElementSibling;
+            if (!grid || !grid.classList.contains('slot-grid')) {
+                grid = document.createElement('div');
+                grid.className = 'slot-grid';
+                select.after(grid);
+            }
+            const options = [...select.options];
+            const times = options.filter(option => option.value !== '');
+            const signature = `${select.disabled}|${select.value}|${options.map(option => option.value + option.text).join(',')}`;
+            if (grid.dataset.signature === signature) return;
+            grid.dataset.signature = signature;
+            if (select.disabled || !times.length) {
+                const note = document.createElement('p');
+                note.className = 'slot-note';
+                note.textContent = options[0] ? options[0].text : 'Choose a service and date first.';
+                grid.replaceChildren(note);
+                return;
+            }
+            grid.replaceChildren(...times.map(option => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'slot-button';
+                button.textContent = option.text;
+                button.setAttribute('aria-pressed', String(option.value === select.value));
+                button.addEventListener('click', () => {
+                    select.value = option.value;
+                    grid.dataset.signature = '';
+                    enhanceSlotPickers();
+                });
+                return button;
+            }));
+        });
+    }
+
+    // 5) Light / dark theme switch (dark by default, choice is remembered)
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const button = document.querySelector('#theme-toggle');
+        if (button) {
+            button.innerHTML = theme === 'dark' ? '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>' : '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+            button.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+            button.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        }
+    }
+    let savedTheme = 'dark';
+    try { savedTheme = localStorage.getItem('dental-theme') === 'light' ? 'light' : 'dark'; } catch (error) { /* storage blocked */ }
+    const themeButton = document.createElement('button');
+    themeButton.type = 'button';
+    themeButton.id = 'theme-toggle';
+    themeButton.className = 'theme-toggle';
+    themeButton.addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem('dental-theme', next); } catch (error) { /* storage blocked */ }
+    });
+    const headerElement = document.querySelector('.app-header');
+    if (headerElement) headerElement.appendChild(themeButton);
+    applyTheme(savedTheme);
+
+    // Run the two helpers after every page change
+    const enhanceObserver = new MutationObserver(() => {
+        enhanceObserver.disconnect();
+        enhancePasswordFields();
+        enhanceSlotPickers();
+        observeContent();
+    });
+    function observeContent() {
+        enhanceObserver.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled'] });
+    }
+    observeContent();
+
+    // 3) Stop double-clicks on submit buttons
+    document.addEventListener('submit', event => {
+        const submit = event.target.querySelector('button[type="submit"]');
+        if (!submit || submit.disabled) return;
+        window.setTimeout(() => {
+            const label = submit.textContent;
+            submit.disabled = true;
+            submit.textContent = 'Please wait...';
+            window.setTimeout(() => { submit.disabled = false; submit.textContent = label; }, 2000);
+        }, 0);
+    }, true);
+
+    // 4) Hide the red error message as soon as the person starts typing again
+    document.addEventListener('input', () => {
+        if (messageElement.classList.contains('is-error')) messageElement.hidden = true;
     });
 
     window.addEventListener('hashchange', () => { void render(); });
