@@ -27,13 +27,7 @@ function current_user_name(): string
 // The first page each role sees after logging in.
 function role_home(string $role): string
 {
-    if ($role === ROLE_ADMIN) {
-        return 'admin/dashboard.php';
-    }
-    if ($role === ROLE_STAFF) {
-        return 'staff/dashboard.php';
-    }
-    return 'patient/dashboard.php';
+    return 'app.html#dashboard';
 }
 
 // ---------- Login and logout ----------

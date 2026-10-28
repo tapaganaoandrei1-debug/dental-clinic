@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../includes/booking.php';
+require_role_api([ROLE_PATIENT, ROLE_STAFF, ROLE_ADMIN]);
 
 $service_id = filter_var($_GET['service_id'] ?? null, FILTER_VALIDATE_INT);
 $dentist_id = filter_var($_GET['dentist_id'] ?? null, FILTER_VALIDATE_INT);

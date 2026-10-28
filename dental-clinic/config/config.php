@@ -27,6 +27,49 @@ if ($base_url_override !== false && $base_url_override !== '') {
 }
 define('BASE_URL', $base_url);
 
+if (PHP_SAPI !== 'cli') {
+    $frontend_routes = [
+        '/index.php' => 'home',
+        '/login.php' => 'login',
+        '/register.php' => 'register',
+        '/forgot-password.php' => 'forgot-password',
+        '/reset-password.php' => 'reset-password',
+        '/verify-email.php' => 'verify-email',
+        '/patient/dashboard.php' => 'dashboard',
+        '/patient/book.php' => 'book',
+        '/patient/appointments.php' => 'appointments',
+        '/patient/queue.php' => 'queue',
+        '/patient/alerts.php' => 'notifications',
+        '/patient/receipt.php' => 'receipt',
+        '/staff/dashboard.php' => 'dashboard',
+        '/staff/appointments.php' => 'appointments',
+        '/staff/queue.php' => 'queue',
+        '/staff/walk-in.php' => 'walk-in',
+        '/staff/notifications.php' => 'staff-notifications',
+        '/admin/dashboard.php' => 'dashboard',
+        '/admin/users.php' => 'admin-users',
+        '/admin/schedules.php' => 'admin-schedules',
+        '/admin/reports.php' => 'admin-reports',
+        '/admin/activity.php' => 'admin-activity',
+        '/admin/backup.php' => 'admin-backup',
+    ];
+    $script_name = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+    foreach ($frontend_routes as $route_suffix => $frontend_route) {
+        if (substr($script_name, -strlen($route_suffix)) === $route_suffix) {
+            if ($route_suffix === '/admin/backup.php' && ($_GET['download'] ?? '') === '1') {
+                continue;
+            }
+            if ($route_suffix === '/admin/reports.php' && ($_GET['export'] ?? '') === 'csv') {
+                continue;
+            }
+            $frontend_query = http_build_query($_GET);
+            $frontend_hash = $frontend_route . ($frontend_query !== '' ? '?' . $frontend_query : '');
+            header('Location: ' . BASE_URL . '/app.html#' . $frontend_hash, true, 302);
+            exit;
+        }
+    }
+}
+
 date_default_timezone_set('Asia/Manila');
 
 // Enable detailed PHP output explicitly in a local development environment.

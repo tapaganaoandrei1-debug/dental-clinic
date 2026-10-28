@@ -11,13 +11,19 @@ PHP 8 and MySQL appointment, queue, and clinic administration system.
 - Staff appointment approval, clinic schedules, breaks, holidays, and booking limits
 - Account/role administration, reports, CSV export, audit trail, notices, and SQL backups
 
+## Page Architecture
+
+Patient, staff, and administrator screens use the static HTML shell `app.html`, styled by `assets/css/portal.css` and driven by `assets/js/portal.js`. The supplied clinic photos are used on the landing/sign-in screens and as a lightened background across dashboards and portal features so foreground text and cards remain readable. This includes the role dashboards, patient appointments/booking/queue/alerts/receipts, staff appointments/queue/walk-ins/notification outbox, and admin account management, schedules, reports, audit activity, and backup screen. PHP provides authentication and verification, role checks, validation, database operations, and JSON through `api/auth.php`, `api/portal.php`, `api/availability.php`, and `api/report-export.php`. The calendar download, CSV report, and SQL backup are PHP file responses rather than PHP-rendered screens. Core PHP page URLs redirect to the HTML portal. Queue updates use shared clinic records and refresh automatically.
+
+When the repository is placed at `C:\xampp\htdocs\dental-clinic`, the main portal is at `http://localhost/dental-clinic/dental-clinic/`. If the `dental-clinic/` application folder is deployed directly, open `http://localhost/dental-clinic/`. Test the live queue with designated development accounts and appointments in the local development database; queue check-ins and status changes are real clinic records.
+
 ## XAMPP Setup (Windows)
 
 1. Install XAMPP and start **Apache** and **MySQL**.
 2. Put this whole project folder in XAMPP's `htdocs` folder. It should be at `C:\xampp\htdocs\dental-clinic`.
 3. Open [phpMyAdmin](http://localhost/phpmyadmin), choose **Import**, select `dental-clinic\database\dental_clinic.sql` from this project, then click **Import** at the bottom. This setup keeps existing database records.
 4. Double-click `setup-xampp-accounts.bat` in the project folder.
-5. Open [the clinic app](http://localhost/dental-clinic/).
+5. Open [the clinic app](http://localhost/dental-clinic/dental-clinic/).
 
 Sign in with one of these local test accounts:
 

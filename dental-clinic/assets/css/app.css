@@ -995,3 +995,71 @@ h1, h2, h3, p { margin-top: 0; }
     .operations-sidebar, .operations-topbar, .patient-header, .patient-nav, .spotlight-actions, .queue-actions { display: none !important; }
     .operations-shell { display: block; }
 }
+
+body { font-size: 17px; }
+.brand-name { font-size: 17px; }
+.main-nav a, .nav-logout { font-size: 15px; }
+.patient-nav > a { font-size: 15px; }
+.patient-brand, .operations-brand { font-size: 18px; }
+.eyebrow { font-size: 12px; }
+.hero-intro { font-size: 18px; }
+.button { font-size: 15px; }
+.text-link { font-size: 15px; }
+.hero-note { font-size: 14px; }
+.trust-strip > div > span:last-child { font-size: 15px; }
+.section-heading > p { font-size: 16px; }
+.service-content > p:not(.service-category) { font-size: 15px; }
+.service-item h3 { font-size: 20px; }
+.service-index { font-size: 14px; }
+.service-meta, .service-choice-name { font-size: 15px; }
+.service-choice-meta { font-size: 14px; }
+.form-panel label, .stacked-form label, .booking-form label { font-size: 16px; }
+.form-panel input, .form-panel select, .form-panel textarea,
+.stacked-form input, .stacked-form select, .stacked-form textarea,
+.booking-form input, .booking-form select, .booking-form textarea {
+    font-size: 17px;
+}
+.form-heading > p:last-child { font-size: 16px; }
+.optional-label, .field-hint { font-size: 14px; }
+.form-switch { font-size: 15px; }
+.alert { font-size: 15px; }
+.dashboard-heading > div > p:last-child { font-size: 17px; }
+.dashboard-date, .subtle-count { font-size: 14px; }
+.stat-item > span { font-size: 15px; }
+.stat-item small { font-size: 14px; }
+.appointment-details h3, .agenda-row h3 { font-size: 18px; }
+.appointment-details p, .agenda-row p { font-size: 15px; }
+.appointment-date span { font-size: 13px; }
+.badge { font-size: 13px; }
+.queue-state small, .agenda-row time { font-size: 14px; }
+.small-link, .queue-actions .small-link { font-size: 14px; }
+.auth-tabs a { font-size: 15px; }
+.form-aside > p:not(.eyebrow) { font-size: 16px; }
+.operations-nav a { font-size: 15px; }
+.operations-user { font-size: 14px; }
+.operations-user small, .operations-brand small { font-size: 13px; }
+.operations-user button, .operations-search button { font-size: 13px; }
+.operations-search input { font-size: 15px; }
+.today-chip { font-size: 13px; }
+.operations-topbar .button { font-size: 14px; }
+.operations-footer { font-size: 13px; }
+.queue-category-filter a, .checkin-details > summary { font-size: 14px; }
+.checkin-row > time, .queue-wait-estimate { font-size: 14px; }
+.checkin-row .button, .queue-now-actions .button { font-size: 14px; }
+.operations-page-main .queue-control-row .appointment-details h3 { font-size: 17px; }
+.operations-page-main .queue-control-row .appointment-details p { font-size: 14px; }
+.operations-page-main .queue-wait-estimate { font-size: 14px; }
+.operations-page-main .queue-actions .small-link { font-size: 14px; }
+.patient-alerts-layout .patient-notification-item h3 { font-size: 17px; }
+.patient-alerts-layout .patient-notification-item p { font-size: 15px; }
+.patient-alerts-layout .patient-notification-item time { font-size: 13px; }
+.booking-steps .booking-step { font-size: 14px; }
+.booking-steps .booking-step b { font-size: 13px; }
+
+@media (max-width: 680px) {
+    .patient-nav > a { font-size: 12px; }
+    .patient-brand, .operations-brand { font-size: 16px; }
+    .operations-nav a { font-size: 13px; }
+    .operations-search input { font-size: 14px; }
+    .operations-topbar .button { font-size: 13px; }
+}
